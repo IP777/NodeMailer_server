@@ -23,7 +23,7 @@ async function sendMail(req, res, next) {
 		// send mail with defined transport object
 		let info = await transporter.sendMail({
 			from: `${email} <foo@example.com>`, // sender address
-			to: PITER_MAIL, // list of receivers
+			to: "ivanov.piter.86@gmail.com", // list of receivers
 			subject: "Оповешение с сайта резюме.", // Subject line
 			//text: "Hello world--?", // plain text body
 			html: `<b>${name} пишет:</b><br><p>${message}</p>`, // html body

@@ -15,15 +15,24 @@ async function sendMail(req, res, next) {
 			port: 465,
 			secure: true, // true for 465, false for other ports
 			auth: {
-				user: "gi8544562@gmail.com", // generated ethereal user
-				pass: "KTEiZpt7RVPk8qa", // generated ethereal password
+				user: MAIL_LOGIN, // generated ethereal user
+				pass: MAIL_PASS, // generated ethereal password
 			},
 		});
 
+		// const transporter = nodemailer.createTransport({
+		// 	host: "smtp.ethereal.email",
+		// 	port: 587,
+		// 	auth: {
+		// 		user: "agustina.mante@ethereal.email",
+		// 		pass: "amcCNp1zCjkt9Y2RaE",
+		// 	},
+		// });
+
 		// send mail with defined transport object
 		let info = await transporter.sendMail({
-			from: `${email} <foo@example.com>`, // sender address
-			to: "ivanov.piter.86@gmail.com", // list of receivers
+			from: `${email}<foo@example.com>`, // sender address
+			to: PITER_MAIL, // list of receivers
 			subject: "Оповешение с сайта резюме.", // Subject line
 			//text: "Hello world--?", // plain text body
 			html: `<b>${name} пишет:</b><br><p>${message}</p>`, // html body

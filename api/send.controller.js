@@ -7,6 +7,7 @@ const { MAIL_LOGIN, MAIL_PASS, PITER_MAIL, VADOS_MAIL } = process.env;
 //https://nodemailer.com/about/
 
 async function sendMail(req, res, next) {
+	const { name, email, message } = req.body;
 	const { user } = req.params;
 
 	const sender_mail = () => {

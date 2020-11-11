@@ -15,8 +15,8 @@ async function sendMail(req, res, next) {
 			port: 465,
 			secure: true, // true for 465, false for other ports
 			auth: {
-				user: "gi8544562@gmail.com", // generated ethereal user
-				pass: "KTEiZpt7RVPk8qa", // generated ethereal password
+				user: MAIL_LOGIN, // generated ethereal user
+				pass: MAIL_PASS, // generated ethereal password
 			},
 		});
 
@@ -37,7 +37,7 @@ async function sendMail(req, res, next) {
 
 async function testServer(req, res, next) {
 	try {
-		res.status(200).send("Server is working maybe (((");
+		res.status(200).send("Server is working maybe!");
 	} catch (err) {
 		next(err);
 	}

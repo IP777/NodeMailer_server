@@ -7,9 +7,16 @@ const { MAIL_LOGIN, MAIL_PASS, PITER_MAIL, VADOS_MAIL } = process.env;
 //https://nodemailer.com/about/
 
 async function sendMail(req, res, next) {
-	try {
-		const { name, email, message } = req.body;
+	const { user } = req.params;
 
+	const sender_mail = () => {
+		if (user === "piter") {
+			return PITER_MAIL;
+		}
+		return VADOS_MAIL;
+	};
+
+	try {
 		// let transporter = nodemailer.createTransport({
 		// 	host: "smtp.gmail.com",
 		// 	port: 465,
@@ -28,19 +35,10 @@ async function sendMail(req, res, next) {
 			},
 		});
 
-		// const transporter = nodemailer.createTransport({
-		// 	host: "smtp.ethereal.email",
-		// 	port: 587,
-		// 	auth: {
-		// 		user: "agustina.mante@ethereal.email",
-		// 		pass: "amcCNp1zCjkt9Y2RaE",
-		// 	},
-		// });
-
-		// send mail with defined transport object
+		//send mail with defined transport object
 		let info = await transporter.sendMail({
 			from: `${email}<foo@example.com>`, // sender address
-			to: PITER_MAIL, // list of receivers
+			to: sender_mail(), // list of receivers
 			subject: "Оповешение с сайта резюме.", // Subject line
 			//text: "Hello world--?", // plain text body
 			html: `<b>${name} пишет:</b><br><p>${message}</p>`, // html body

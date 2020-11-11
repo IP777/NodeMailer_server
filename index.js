@@ -11,7 +11,7 @@ app.use(express.json());
 //Прослойка для обработки запросов от формы
 //app.use(express.urlencoded({ extended: true }));
 
-app.post("/mail/send", controller.sendMail);
+app.post("/mail/send/:user", controller.sendMail);
 app.get("/test", controller.testServer);
 
 app.listen(PORT, () => {

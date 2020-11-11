@@ -10,10 +10,18 @@ async function sendMail(req, res, next) {
 	try {
 		const { name, email, message } = req.body;
 
+		// let transporter = nodemailer.createTransport({
+		// 	host: "smtp.gmail.com",
+		// 	port: 465,
+		// 	secure: true, // true for 465, false for other ports
+		// 	auth: {
+		// 		user: MAIL_LOGIN, // generated ethereal user
+		// 		pass: MAIL_PASS, // generated ethereal password
+		// 	},
+		// });
+
 		let transporter = nodemailer.createTransport({
-			host: "smtp.gmail.com",
-			port: 465,
-			secure: true, // true for 465, false for other ports
+			service: "gmail",
 			auth: {
 				user: MAIL_LOGIN, // generated ethereal user
 				pass: MAIL_PASS, // generated ethereal password

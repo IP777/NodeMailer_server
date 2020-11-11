@@ -12,6 +12,7 @@ app.use(express.json());
 //app.use(express.urlencoded({ extended: true }));
 
 app.post("/mail/send", controller.sendMail);
+app.get("/test", controller.testServer);
 
 app.listen(PORT, () => {
 	console.log(`Server has been started ${PORT}...`);

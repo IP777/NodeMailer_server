@@ -37,13 +37,7 @@ async function sendMail(req, res, next) {
 
 async function testServer(req, res, next) {
 	try {
-		res.status(200).send(
-			"Server is working",
-			MAIL_LOGIN,
-			MAIL_PASS,
-			PITER_MAIL,
-			VADOS_MAIL
-		);
+		res.status(200).send("Server is working");
 	} catch (err) {
 		next(err);
 	}

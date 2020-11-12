@@ -28,21 +28,13 @@ async function sendMail(req, res, next) {
 			},
 		});
 
-		// let transporter = nodemailer.createTransport({
-		// 	service: "gmail",
-		// 	auth: {
-		// 		user: MAIL_LOGIN, // generated ethereal user
-		// 		pass: MAIL_PASS, // generated ethereal password
-		// 	},
-		// });
-
 		//send mail with defined transport object
 		let info = await transporter.sendMail({
 			from: `${MAIL_LOGIN}`, // sender address
 			to: sender_mail(), // list of receivers
-			subject: "Оповешение с сайта резюме.", // Subject line
+			subject: "Оповешение с сайта-резюме.", // Subject line
 			//text: "Hello world--?", // plain text body
-			html: `<b>${name} пишет:</b><br><p>${message}</p>`, // html body
+			html: `<h3>${email}</h3> <b>${name} пишет:</b><br><p>${message}</p>`, // html body
 		});
 
 		res.status(200).send(info.messageId);

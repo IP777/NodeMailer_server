@@ -3,6 +3,7 @@ var cors = require("cors");
 const app = express();
 const dotenv = require("dotenv");
 const controller = require("./api/send.controller");
+const validator = require("./helpers/validator");
 
 dotenv.config();
 const PORT = process.env.PORT || 80;
@@ -14,7 +15,7 @@ app.use(express.urlencoded({ extended: true }));
 // CORS заголовки с разрешением доступа с любого сервера
 app.use(cors());
 
-app.post("/mail/send/:user", controller.sendMail);
+app.post("/mail/send/:user", validator.sendingMessage, controller.sendMail);
 app.get("/test", controller.testServer);
 
 app.listen(PORT, () => {
@@ -23,3 +24,5 @@ app.listen(PORT, () => {
 
 //Тестирование сервера на heroku
 //heroku logs --tail
+//Деплой на сервер heroku
+//git push heroku master

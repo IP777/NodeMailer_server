@@ -18,27 +18,27 @@ async function sendMail(req, res, next) {
 	};
 
 	try {
-		// let transporter = nodemailer.createTransport({
-		// 	host: "smtp.gmail.com",
-		// 	port: 465,
-		// 	secure: true, // true for 465, false for other ports
-		// 	auth: {
-		// 		user: MAIL_LOGIN, // generated ethereal user
-		// 		pass: MAIL_PASS, // generated ethereal password
-		// 	},
-		// });
-
 		let transporter = nodemailer.createTransport({
-			service: "gmail",
+			host: "smtp.meta.ua",
+			port: 465,
+			secure: true, // true for 465, false for other ports
 			auth: {
 				user: MAIL_LOGIN, // generated ethereal user
 				pass: MAIL_PASS, // generated ethereal password
 			},
 		});
 
+		// let transporter = nodemailer.createTransport({
+		// 	service: "gmail",
+		// 	auth: {
+		// 		user: MAIL_LOGIN, // generated ethereal user
+		// 		pass: MAIL_PASS, // generated ethereal password
+		// 	},
+		// });
+
 		//send mail with defined transport object
 		let info = await transporter.sendMail({
-			from: `${email}<foo@example.com>`, // sender address
+			from: `${MAIL_LOGIN}`, // sender address
 			to: sender_mail(), // list of receivers
 			subject: "Оповешение с сайта резюме.", // Subject line
 			//text: "Hello world--?", // plain text body

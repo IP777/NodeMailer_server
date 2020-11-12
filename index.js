@@ -20,3 +20,6 @@ app.get("/test", controller.testServer);
 app.listen(PORT, () => {
 	console.log(`Server has been started ${PORT}...`);
 });
+
+//Тестирование сервера на heroku
+//heroku logs --tail

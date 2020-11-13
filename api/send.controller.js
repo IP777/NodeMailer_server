@@ -1,21 +1,19 @@
+const axios = require("axios");
 const nodemailer = require("nodemailer");
 require("dotenv").config();
 
-const { MAIL_LOGIN, MAIL_PASS, PITER_MAIL, VADOS_MAIL } = process.env;
+const {
+	MAIL_LOGIN,
+	MAIL_PASS,
+	TELEGRAMM_BOT_TOKEN,
+	TELEGRAMM_CHAT_ID,
+} = process.env;
 
 //Использован пакет Nodemailer
 //https://nodemailer.com/about/
 
 async function sendMail(req, res, next) {
-	const { name, email, message } = req.body;
-	const { user } = req.params;
-
-	const sender_mail = () => {
-		if (user === "piter") {
-			return PITER_MAIL;
-		}
-		return VADOS_MAIL;
-	};
+	const { name, email, message, sender } = req.body;
 
 	try {
 		let transporter = nodemailer.createTransport({
@@ -31,7 +29,7 @@ async function sendMail(req, res, next) {
 		//send mail with defined transport object
 		let info = await transporter.sendMail({
 			from: `${MAIL_LOGIN}`, // sender address
-			to: sender_mail(), // list of receivers
+			to: sender, // list of receivers
 			subject: "Оповешение с сайта-резюме.", // Subject line
 			//text: "Hello world--?", // plain text body
 			html: `<h3>${email}</h3> <b>${name} пишет:</b><br><p>${message}</p>`, // html body
@@ -39,13 +37,37 @@ async function sendMail(req, res, next) {
 
 		res.status(200).send(info.messageId);
 	} catch (err) {
-		next(err);
+		res.status(400).send(err);
+	}
+}
+
+//Telegramm bot
+//Образец https://habr.com/ru/post/348332/
+
+async function sendMessage(req, res, next) {
+	const { name, email, message } = req.body;
+	try {
+		const encodeMsg = encodeURI(
+			`<strong>Имя: </strong>${name}  <strong>Почта: </strong>${email}
+			${message}
+			`
+		);
+		const response = await axios.get(
+			`https://api.telegram.org/bot${TELEGRAMM_BOT_TOKEN}/sendMessage?chat_id=${TELEGRAMM_CHAT_ID}&parse_mode=html&text=${encodeMsg}`
+		);
+
+		res.status(200).send({
+			status: response.status,
+			message: "Message sending!",
+		});
+	} catch (err) {
+		res.status(400).send(err);
 	}
 }
 
 async function testServer(req, res, next) {
 	try {
-		res.status(200).send("Server is working maybe!");
+		res.status(200).send(`Hello Sender!`);
 	} catch (err) {
 		next(err);
 	}
@@ -53,5 +75,6 @@ async function testServer(req, res, next) {
 
 module.exports = {
 	sendMail,
+	sendMessage,
 	testServer,
 };

@@ -4,6 +4,7 @@ const app = express();
 const dotenv = require("dotenv");
 const controller = require("./api/send.controller");
 const validator = require("./helpers/validator");
+const senders = require("./helpers/senders");
 
 dotenv.config();
 const PORT = process.env.PORT || 80;
@@ -15,8 +16,15 @@ app.use(express.urlencoded({ extended: true }));
 // CORS заголовки с разрешением доступа с любого сервера
 app.use(cors());
 
-app.post("/mail/send/:user", validator.sendingMessage, controller.sendMail);
-app.get("/test", controller.testServer);
+app.post(
+	"/mail/send/:user",
+	validator.sendingMessage,
+	senders.whoSendMessage,
+	controller.sendMail
+);
+app.post("/telegramm/send/", validator.sendingMessage, controller.sendMessage);
+
+app.get("/test/:user", controller.testServer);
 
 app.listen(PORT, () => {
 	console.log(`Server has been started ${PORT}...`);

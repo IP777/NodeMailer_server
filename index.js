@@ -17,17 +17,18 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cors());
 
 app.post(
-	"/mail/send/:user",
-	validator.sendingMessage,
-	senders.whoSendMessage,
-	controller.sendMail
+  "/mail/send/:user",
+  validator.sendingEmail,
+  senders.whoSendMessage,
+  controller.sendMail
 );
-app.post("/telegramm/send/", validator.sendingMessage, controller.sendMessage);
+
+app.post("/telegram/send/", validator.sendingMessage, controller.sendMessage);
 
 app.get("/test/:user", controller.testServer);
 
 app.listen(PORT, () => {
-	console.log(`Server has been started ${PORT}...`);
+  console.log(`Server has been started ${PORT}...`);
 });
 
 //Тестирование сервера на heroku

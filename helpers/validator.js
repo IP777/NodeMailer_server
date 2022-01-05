@@ -3,7 +3,7 @@ const Joi = require("@hapi/joi");
 function sendingMessage(req, res, next) {
   const schema = Joi.object({
     name: Joi.string().required(),
-    email: Joi.string(),
+    email: Joi.any(),
     message: Joi.string().required(),
   });
   const result = schema.validate(req.body);

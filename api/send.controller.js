@@ -45,7 +45,7 @@ async function sendMessage(req, res, next) {
   const { name, email, message } = req.body;
   try {
     const generateText = () => {
-      if (!_.isUndefined(email)) {
+      if (!_.isUndefined(email) && !_.isNull(email) && !_.isEmpty(email)) {
         return `<strong>Имя: </strong>${name}
     		<strong>Почта: </strong>${email}
     		${message}

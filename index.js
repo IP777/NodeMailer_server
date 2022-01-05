@@ -34,5 +34,9 @@ app.listen(PORT, () => {
 
 //Тестирование сервера на heroku
 //heroku logs --tail
+
+// Коннектимся к репозиторию heroku, если создан.
+// heroku git:remote -a murmuring-headland-47233
+
 //Деплой на сервер heroku
 //git push heroku master

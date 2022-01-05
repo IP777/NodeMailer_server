@@ -26,6 +26,7 @@ app.post(
 app.post("/telegram/send/", validator.sendingMessage, controller.sendMessage);
 
 app.get("/test/:user", controller.testServer);
+app.get("/", controller.testServer);
 
 app.listen(PORT, () => {
   console.log(`Server has been started ${PORT}...`);

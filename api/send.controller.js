@@ -59,10 +59,15 @@ async function sendMessage(req, res, next) {
     const telegramResp = await axios.get(
       `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage?chat_id=${TELEGRAM_CHAT_ID}&parse_mode=html&text=${encodeMsg}`
     );
-    res.status(200).send({
-      status: telegramResp.status,
-      message: "Message sending!",
-    });
+    if (telegramResp.statusCode === 200) {
+      res.status(200).send({
+        status: telegramResp.status,
+        message: "Message sending!",
+      });
+    }
+    if (telegramResp.statusCode !== 200) {
+      res.status(400).send({ status: "error", message: "Ups some error!" });
+    }
   } catch (err) {
     res.status(400).send(err);
   }
@@ -70,8 +75,10 @@ async function sendMessage(req, res, next) {
 
 async function testServer(req, res, next) {
   try {
-    console.log(req);
-    res.status(200).send(`Hello Sender!`);
+    res.status(200).send(
+      `Hello Sender! This server send email and message to telegram chanel. <br/>
+		Server: https://murmuring-headland-47233.herokuapp.com/`
+    );
   } catch (err) {
     next(err);
   }
